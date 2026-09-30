@@ -1,0 +1,889 @@
+const { useState, useEffect } = React;
+
+function PortfolioApp() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['hero', 'about', 'education', 'skills', 'experience', 'services', 'projects', 'achievements', 'contact'];
+      const scrollPos = window.scrollY + 200;
+
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  return (
+    <div className="portfolio-wrapper">
+      {/* Navigation Bar */}
+      <nav className="navbar">
+        <div className="container nav-container">
+          <a href="#hero" className="nav-brand">
+            <span className="nav-brand-code">&lt;GM /&gt;</span> Ganna Mousa
+          </a>
+
+          <button
+            className="mobile-toggle"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle navigation menu"
+          >
+            <i className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
+          </button>
+
+          <ul className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
+            <li>
+              <a
+                href="#about"
+                className={`nav-link ${activeSection === 'about' ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                About
+              </a>
+            </li>
+            <li>
+              <a
+                href="#education"
+                className={`nav-link ${activeSection === 'education' ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                Education
+              </a>
+            </li>
+            <li>
+              <a
+                href="#skills"
+                className={`nav-link ${activeSection === 'skills' ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                Skills
+              </a>
+            </li>
+            <li>
+              <a
+                href="#experience"
+                className={`nav-link ${activeSection === 'experience' ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                Experience
+              </a>
+            </li>
+            <li>
+              <a
+                href="#services"
+                className={`nav-link ${activeSection === 'services' ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                Services
+              </a>
+            </li>
+            <li>
+              <a
+                href="#projects"
+                className={`nav-link ${activeSection === 'projects' ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                Projects
+              </a>
+            </li>
+            <li>
+              <a
+                href="#achievements"
+                className={`nav-link ${activeSection === 'achievements' ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                Achievements
+              </a>
+            </li>
+            <li>
+              <a
+                href="#contact"
+                className="btn btn-primary"
+                style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}
+                onClick={closeMobileMenu}
+              >
+                Let's Talk
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      {/* 1. Hero / Cover Section */}
+      <section id="hero" className="hero-section">
+        <div className="container">
+          <div className="hero-grid">
+            <div className="hero-content">
+              <div className="hero-badge">
+                <span className="pulse-dot"></span>
+                <span>Available for Data Analytics & Projects</span>
+              </div>
+
+              <h1 className="hero-title">
+                Hi, I'm <span className="text-gradient">Ganna Mousa</span>
+              </h1>
+
+              <div className="hero-role">
+                <span>Computer Science Student</span>
+                <span className="hero-role-separator">•</span>
+                <span className="text-gradient">Data Enthusiast</span>
+              </div>
+
+              <p className="hero-slogan">
+                "Every attempt is a step closer to success."
+              </p>
+
+              <div className="hero-actions">
+                <a href="#projects" className="btn btn-primary">
+                  <span>View Projects</span>
+                  <i className="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#contact" className="btn btn-secondary">
+                  <span>Contact Me</span>
+                  <i className="fa-regular fa-envelope"></i>
+                </a>
+              </div>
+
+              <div className="hero-stats">
+                <div className="stat-item">
+                  <span className="stat-num text-gradient">2028</span>
+                  <span className="stat-label">Graduation Year</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-num text-gradient">7+ Mos</span>
+                  <span className="stat-label">Training & Practice</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-num text-gradient">100%</span>
+                  <span className="stat-label">Commitment & Passion</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Profile Picture Card with Orbiting Visuals */}
+            <div className="hero-visual">
+              <div className="avatar-wrapper">
+                <div className="avatar-backdrop-glow"></div>
+                <div className="avatar-orbit-ring"></div>
+                <div className="avatar-orbit-ring-secondary"></div>
+                
+                <div className="avatar-frame">
+                  <img
+                    src="personal_photo.jpeg"
+                    alt="Ganna Mousa - Profile"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80";
+                    }}
+                  />
+                </div>
+
+                {/* Orbiting / Surrounding Tech Badges */}
+                <div className="orbit-badge orbit-badge-pb" title="Power BI">
+                  <i className="fa-solid fa-chart-simple"></i>
+                  <span>Power BI</span>
+                </div>
+                <div className="orbit-badge orbit-badge-tableau" title="Tableau">
+                  <i className="fa-solid fa-chart-pie"></i>
+                  <span>Tableau</span>
+                </div>
+                <div className="orbit-badge orbit-badge-pandas" title="Pandas">
+                  <i className="fa-solid fa-table"></i>
+                  <span>Pandas</span>
+                </div>
+                <div className="orbit-badge orbit-badge-py" title="Python">
+                  <i className="fa-brands fa-python"></i>
+                  <span>Python</span>
+                </div>
+                <div className="orbit-badge orbit-badge-sql" title="SQL Database">
+                  <i className="fa-solid fa-database"></i>
+                  <span>SQL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. About Me Section */}
+      <section id="about" className="section-padding">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">
+              <i className="fa-regular fa-user"></i> ABOUT ME
+            </span>
+            <h2 className="section-title">
+              Crafting Insights From <span className="text-gradient">Complex Data</span>
+            </h2>
+            <p className="section-subtitle">
+              Turning raw data into clear insights and practical solutions.
+            </p>
+          </div>
+
+          <div className="about-grid">
+            <div className="about-story glass-card">
+              <p>
+                My journey into programming started through studying <strong>Computer Science at Damietta University</strong>. As I explored different subjects and programming concepts, I gradually discovered the areas that I enjoy and want to learn more about.
+              </p>
+              <p>
+                I became especially interested in data because data has become an important resource in today's world. Understanding how to work with data can help us understand information, discover patterns, and make better sense of complex problems.
+              </p>
+              <p>
+                I started learning <strong>Python and SQL</strong> and then explored areas such as Data Analysis, Data Cleaning, Data Visualization, Excel, Power BI, databases, and Statistics.
+              </p>
+              <p>
+                Today, I am continuing to build practical projects, improve my problem-solving skills, and explore different areas of the broader Data field.
+              </p>
+
+              <div className="quote-highlight">
+                "I turn every challenge into an opportunity to learn, build, and improve."
+              </div>
+
+              <div className="quote-highlight-alt">
+                "Combining data, code, and problem-solving to turn challenges into meaningful solutions."
+              </div>
+
+              <div className="usp-box">
+                <div className="usp-header">
+                  <i className="fa-solid fa-bullseye"></i> Unique Value Proposition
+                </div>
+                <div className="usp-content">
+                  Turning raw data into clear insights and practical solutions.
+                </div>
+              </div>
+            </div>
+
+            {/* Approach to learning */}
+            <div className="glass-card approach-card">
+              <h3 className="approach-title">
+                <i className="fa-solid fa-compass text-gradient"></i>
+                HOW I APPROACH LEARNING
+              </h3>
+              <ul className="approach-list">
+                {[
+                  { name: 'Programming', icon: 'fa-solid fa-code' },
+                  { name: 'Problem Solving', icon: 'fa-solid fa-puzzle-piece' },
+                  { name: 'Data Understanding', icon: 'fa-solid fa-database' },
+                  { name: 'Analytical Thinking', icon: 'fa-solid fa-brain' },
+                  { name: 'Visualization', icon: 'fa-solid fa-chart-column' },
+                  { name: 'Continuous Learning', icon: 'fa-solid fa-arrows-spin' }
+                ].map((item, idx) => (
+                  <li key={idx} className="approach-item">
+                    <i className={`${item.icon} approach-icon`}></i>
+                    <span className="approach-name">{item.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Education Section */}
+      <section id="education" className="section-padding" style={{ background: 'rgba(255, 255, 255, 0.01)' }}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">
+              <i className="fa-solid fa-graduation-cap"></i> ACADEMIC BACKGROUND
+            </span>
+            <h2 className="section-title">
+              Education & <span className="text-gradient">Qualifications</span>
+            </h2>
+            <p className="section-subtitle">
+              Building a strong computer science and mathematical foundation.
+            </p>
+          </div>
+
+          <div className="glass-card edu-card">
+            <div className="edu-main">
+              <div className="edu-icon-wrapper">
+                <i className="fa-solid fa-building-columns"></i>
+              </div>
+              <div className="edu-info">
+                <h3>Damietta University</h3>
+                <div className="edu-major">
+                  Bachelor of Computer Science
+                </div>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                  Focusing on Algorithms, Data Structures, Database Systems, and Applied Mathematics.
+                </p>
+              </div>
+            </div>
+            <div className="edu-badge">
+              <i className="fa-regular fa-calendar-check"></i>
+              Third Year / Class of 2028
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Skills Section */}
+      <section id="skills" className="section-padding">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">
+              <i className="fa-solid fa-layer-group"></i> TECH STACK
+            </span>
+            <h2 className="section-title">
+              Skills & <span className="text-gradient">Core Competencies</span>
+            </h2>
+            <p className="section-subtitle">
+              A comprehensive toolkit spanning data engineering, visual analytics, and algorithmic programming.
+            </p>
+          </div>
+
+          <div className="skills-grid">
+            {/* Category 1 */}
+            <div className="glass-card skill-category-card">
+              <div className="skill-cat-header">
+                <i className="fa-solid fa-brain"></i>
+                <h3 className="skill-cat-title">Data & Analytics</h3>
+              </div>
+              <div className="skill-tags">
+                {[
+                  'Data Analysis',
+                  'Data Cleaning',
+                  'Data Visualization',
+                  'Data Preprocessing',
+                  'Statistics',
+                  'Data Quality'
+                ].map((s, i) => (
+                  <span key={i} className="skill-tag">
+                    <i className="fa-solid fa-check text-gradient" style={{ fontSize: '0.75rem' }}></i>
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Category 2 */}
+            <div className="glass-card skill-category-card">
+              <div className="skill-cat-header">
+                <i className="fa-solid fa-chart-pie"></i>
+                <h3 className="skill-cat-title">BI & Visualization</h3>
+              </div>
+              <div className="skill-tags">
+                {[
+                  'Power BI',
+                  'Tableau',
+                  'Microsoft Excel',
+                  'Interactive Dashboards',
+                  'DAX'
+                ].map((s, i) => (
+                  <span key={i} className="skill-tag">
+                    <i className="fa-solid fa-chart-line text-gradient" style={{ fontSize: '0.75rem' }}></i>
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Category 3 */}
+            <div className="glass-card skill-category-card">
+              <div className="skill-cat-header">
+                <i className="fa-solid fa-code"></i>
+                <h3 className="skill-cat-title">Programming</h3>
+              </div>
+              <div className="skill-tags">
+                {[
+                  'Python',
+                  'C++',
+                  'SQL',
+                  'OOP',
+                  'Data Structures',
+                  'Problem Solving'
+                ].map((s, i) => (
+                  <span key={i} className="skill-tag">
+                    <i className="fa-solid fa-terminal text-gradient" style={{ fontSize: '0.75rem' }}></i>
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Category 4 */}
+            <div className="glass-card skill-category-card">
+              <div className="skill-cat-header">
+                <i className="fa-solid fa-database"></i>
+                <h3 className="skill-cat-title">Databases & Tools</h3>
+              </div>
+              <div className="skill-tags">
+                {[
+                  'SQL Server',
+                  'Git',
+                  'GitHub',
+                  'Jupyter Notebook',
+                  'Power Query'
+                ].map((s, i) => (
+                  <span key={i} className="skill-tag">
+                    <i className="fa-solid fa-gear text-gradient" style={{ fontSize: '0.75rem' }}></i>
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Work Experience & Internships Section */}
+      <section id="experience" className="section-padding" style={{ background: 'rgba(255, 255, 255, 0.01)' }}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">
+              <i className="fa-solid fa-briefcase"></i> EXPERIENCE & INTERNSHIPS
+            </span>
+            <h2 className="section-title">
+              Hands-on <span className="text-gradient">Training & Roles</span>
+            </h2>
+            <p className="section-subtitle">
+              Professional training programs from prestigious national technology initiatives.
+            </p>
+          </div>
+
+          <div className="timeline-container">
+            {/* Experience 1: DEPI */}
+            <div className="timeline-card-wrapper">
+              <div className="timeline-dot"></div>
+              <div className="glass-card">
+                <div className="exp-card-header">
+                  <div className="exp-title-group">
+                    <h3>Data Science Trainee</h3>
+                    <div className="exp-org">Digital Egypt Pioneers Initiative (DEPI)</div>
+                    <div className="exp-track">Track: Data Science</div>
+                  </div>
+                  <div className="exp-duration">
+                    <i className="fa-regular fa-clock"></i> 6 Months
+                  </div>
+                </div>
+
+                <div className="exp-areas-label">Learning & Training Areas</div>
+                <ul className="exp-areas-list">
+                  {[
+                    'Practicing Python for data-related tasks',
+                    'Working with SQL and databases',
+                    'Understanding the Data Science workflow',
+                    'Learning data cleaning and preprocessing',
+                    'Exploring data analysis and visualization',
+                    'Developing problem-solving and analytical skills',
+                    'Working on practical exercises and projects'
+                  ].map((area, idx) => (
+                    <li key={idx}>
+                      <i className="fa-solid fa-circle-check"></i>
+                      <span>{area}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Experience 2: ITI */}
+            <div className="timeline-card-wrapper">
+              <div className="timeline-dot"></div>
+              <div className="glass-card">
+                <div className="exp-card-header">
+                  <div className="exp-title-group">
+                    <h3>Data Analytics Summer Training</h3>
+                    <div className="exp-org">Information Technology Institute (ITI)</div>
+                    <div className="exp-track">Program: Data Analytics Summer Training</div>
+                  </div>
+                  <div className="exp-duration">
+                    <i className="fa-regular fa-clock"></i> 1 Month
+                  </div>
+                </div>
+
+                <div className="exp-areas-label">Topics Studied & Mastered</div>
+                <ul className="exp-areas-list">
+                  {[
+                    'SQL',
+                    'Advanced SQL',
+                    'Excel',
+                    'Power BI',
+                    'Tableau',
+                    'Statistics'
+                  ].map((topic, idx) => (
+                    <li key={idx}>
+                      <i className="fa-solid fa-circle-check"></i>
+                      <span>{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Offered Services Section */}
+      <section id="services" className="section-padding">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">
+              <i className="fa-solid fa-handshake-angle"></i> WHAT I OFFER
+            </span>
+            <h2 className="section-title">
+              Currently Available <span className="text-gradient">Services</span>
+            </h2>
+            <p className="section-subtitle">
+              End-to-end data analytics solutions to transform unorganized records into actionable business intelligence.
+            </p>
+          </div>
+
+          <div className="services-grid">
+            {[
+              {
+                title: 'Data Analysis',
+                desc: 'Inspecting, aggregating, and transforming structured data to uncover hidden patterns and answer core business questions.',
+                icon: 'fa-solid fa-magnifying-glass-chart'
+              },
+              {
+                title: 'Data Cleaning',
+                desc: 'Handling missing values, deduplication, standardizing formats, and ensuring rigorous data quality.',
+                icon: 'fa-solid fa-broom'
+              },
+              {
+                title: 'Data Visualization',
+                desc: 'Crafting clear visual representations, plots, and charts using modern design principles.',
+                icon: 'fa-solid fa-chart-column'
+              },
+              {
+                title: 'Interactive Dashboards',
+                desc: 'Designing dynamic, responsive dashboards that enable stakeholders to drill down into metrics intuitively.',
+                icon: 'fa-solid fa-chart-pie'
+              },
+              {
+                title: 'SQL Database Management',
+                desc: 'Writing optimized queries, joins, aggregations, and structuring relational database workflows.',
+                icon: 'fa-solid fa-database'
+              },
+              {
+                title: 'Power BI Reporting',
+                desc: 'Developing comprehensive reports with DAX measures, automated refresh models, and actionable visual KPIs.',
+                icon: 'fa-solid fa-gauge-high'
+              }
+            ].map((srv, idx) => (
+              <div key={idx} className="glass-card service-card">
+                <div>
+                  <div className="service-icon-box">
+                    <i className={srv.icon}></i>
+                  </div>
+                  <h3 className="service-title">{srv.title}</h3>
+                  <p className="service-desc">{srv.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Featured Projects Section */}
+      <section id="projects" className="section-padding" style={{ background: 'rgba(255, 255, 255, 0.01)' }}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">
+              <i className="fa-solid fa-laptop-code"></i> PORTFOLIO WORK
+            </span>
+            <h2 className="section-title">
+              Featured <span className="text-gradient">Projects</span>
+            </h2>
+            <p className="section-subtitle">
+              Practical implementations demonstrating analytical rigor and visual excellence.
+            </p>
+          </div>
+
+          <div className="projects-grid">
+            <div className="glass-card project-card">
+              <div>
+                <div className="project-header">
+                  <span className="project-badge">Power BI Project</span>
+                  <a
+                    href="https://github.com/gannamosa75-cpu/PowerBi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-secondary"
+                    title="View Source on GitHub"
+                    style={{ fontSize: '1.25rem' }}
+                  >
+                    <i className="fa-brands fa-github"></i>
+                  </a>
+                </div>
+                <h3 className="project-title">Power BI Data Analysis & Dashboard</h3>
+                <p className="project-desc">
+                  "A practical Power BI project focused on analyzing structured data and presenting information through interactive visualizations and dashboards."
+                </p>
+                <div className="project-techs">
+                  <span className="project-tech">Power BI</span>
+                  <span className="project-tech">Data Visualization</span>
+                  <span className="project-tech">DAX</span>
+                </div>
+              </div>
+
+              <div className="project-links">
+                <a
+                  href="https://github.com/gannamosa75-cpu/PowerBi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{ width: '100%', justifyContent: 'center' }}
+                >
+                  <i className="fa-brands fa-github"></i>
+                  <span>Explore Repository</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Achievements & Competitions Section */}
+      <section id="achievements" className="section-padding">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">
+              <i className="fa-solid fa-award"></i> RECOGNITION & CERTIFICATES
+            </span>
+            <h2 className="section-title">
+              Achievements & <span className="text-gradient">Competitions</span>
+            </h2>
+            <p className="section-subtitle">
+              Verified certifications, competition participation, and milestones in data and computer science.
+            </p>
+          </div>
+
+          <div className="achievements-grid">
+            {/* Certificate 1: ITI */}
+            <div className="glass-card achievement-card">
+              <div>
+                <div className="achievement-icon">
+                  <i className="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h3 className="achievement-title">ITI - Data Analytics & BI Certificate</h3>
+                <p className="achievement-desc">
+                  Information Technology Institute (ITI) certification in Data Analytics & BI (Power BI, Tableau, SQL Server, Statistics, Generative AI & Automation) - 144 Hours.
+                </p>
+                <a
+                  href="GM2.jpeg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="achievement-img-wrapper"
+                  title="View ITI Certificate"
+                >
+                  <img
+                    src="GM2.jpeg"
+                    alt="Information Technology Institute (ITI) - Data Analytics & BI Certificate"
+                    className="cert-preview-img"
+                  />
+                </a>
+              </div>
+              <a
+                href="GM2.jpeg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary"
+                style={{ width: '100%', justifyContent: 'center' }}
+              >
+                <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>View Full Certificate</span>
+              </a>
+            </div>
+
+            {/* Certificate 2: Microsoft AI */}
+            <div className="glass-card achievement-card">
+              <div>
+                <div className="achievement-icon">
+                  <i className="fa-solid fa-award"></i>
+                </div>
+                <h3 className="achievement-title">Microsoft - AI Certificate of Completion</h3>
+                <p className="achievement-desc">
+                  Certified completion of Artificial Intelligence program provided by Microsoft and the Ministry of Youth and Sports (Tawar & Ghayar).
+                </p>
+                <a
+                  href="cert_microsoft_ai.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="achievement-img-wrapper"
+                  title="View Microsoft AI Certificate"
+                >
+                  <img
+                    src="cert_microsoft_ai.jpg"
+                    alt="Microsoft & Ministry of Youth and Sports - Artificial Intelligence Certificate"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://drive.google.com/thumbnail?id=1Y7ANplXReVEK1df6OIvNuIufgVFhobOm&sz=w1000";
+                    }}
+                    className="cert-preview-img"
+                  />
+                </a>
+              </div>
+              <a
+                href="cert_microsoft_ai.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary"
+                style={{ width: '100%', justifyContent: 'center' }}
+              >
+                <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>View Full Certificate</span>
+              </a>
+            </div>
+
+            {/* Certificate 3: ICPC ECPC */}
+            <div className="glass-card achievement-card">
+              <div>
+                <div className="achievement-icon">
+                  <i className="fa-solid fa-trophy"></i>
+                </div>
+                <h3 className="achievement-title">ICPC ECPC - Certificate of Achievement</h3>
+                <p className="achievement-desc">
+                  Certificate of Achievement in the Egyptian Collegiate Programming Contest (ECPC Qualifications) representing Damietta University.
+                </p>
+                <a
+                  href="cert_icpc_ecpc.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="achievement-img-wrapper"
+                  title="View ICPC Certificate"
+                >
+                  <img
+                    src="cert_icpc_ecpc.jpg"
+                    alt="ICPC ECPC Qualifications - Certificate of Achievement"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://drive.google.com/thumbnail?id=1e_Aq1uDQ4CYoQubPPYAX0SbZrIdGI5sU&sz=w1000";
+                    }}
+                    className="cert-preview-img"
+                  />
+                </a>
+              </div>
+              <a
+                href="cert_icpc_ecpc.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary"
+                style={{ width: '100%', justifyContent: 'center' }}
+              >
+                <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>View Full Certificate</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. Contact Section */}
+      <section id="contact" className="section-padding">
+        <div className="container contact-container">
+          <div className="glass-card contact-card">
+            <span className="section-tag" style={{ marginBottom: '1.5rem' }}>
+              <i className="fa-regular fa-paper-plane"></i> GET IN TOUCH
+            </span>
+            <h2 className="contact-title">Let's Connect</h2>
+            <p className="contact-sub">
+              "Interested in data, technology, and continuous learning? Feel free to connect with me."
+            </p>
+
+            <div className="contact-links-grid">
+              <a href="mailto:gannamosa808@gmail.com" className="contact-btn-card">
+                <i className="fa-regular fa-envelope"></i>
+                <span>gannamosa808@gmail.com</span>
+              </a>
+
+              <a
+                href="https://github.com/gannamosa75-cpu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-btn-card"
+              >
+                <i className="fa-brands fa-github"></i>
+                <span>GitHub Profile</span>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/gannamousa/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-btn-card"
+              >
+                <i className="fa-brands fa-linkedin"></i>
+                <span>LinkedIn Profile</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-top">
+            <div className="footer-brand">
+              <h4>Ganna Mousa</h4>
+              <p className="footer-tagline">Computer Science Student | Data Enthusiast</p>
+              <p className="footer-quote">
+                "Exploring data, creating insights, growing every day."
+              </p>
+            </div>
+
+            <div className="footer-social-links">
+              <a
+                href="https://github.com/gannamosa75-cpu"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+              >
+                <i className="fa-brands fa-github"></i>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/gannamousa/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <i className="fa-brands fa-linkedin"></i>
+              </a>
+              <a
+                href="mailto:gannamosa808@gmail.com"
+                aria-label="Email"
+              >
+                <i className="fa-solid fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <div>
+              © 2026 Ganna Mousa. Built with curiosity and code.
+            </div>
+            <div>
+              Designed with modern dark tech aesthetics.
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+const rootElement = document.getElementById('root');
+const root = ReactDOM.createRoot(rootElement);
+root.render(<PortfolioApp />);
